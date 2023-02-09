@@ -6,15 +6,15 @@ from random import randint
 # There are some modifications for the purposes of this program
 def rps():
 	# this determines the computer's choice
-	options = ["Rock", "Paper", "Scissors"]
-	options_short = ["R", "P", "S"]
+	options = ("Rock", "Paper", "Scissors")
+	options_short = ("R", "P", "S")
 	c_choice_l = options[randint(0, 2)]
 	# this will determine the user's choice
 	u_choice = input("Rock, Paper, or Scissors?\n")
 	
 	# this determines and displays the winner
 	try:
-		c_choice = c_choice_l[0].upper()
+		c_choice = c_choice_l[0]
 		u_choice = u_choice[0].upper()
 		options_short.index(u_choice)
 		print(f"\nThe computer chose {c_choice_l}!")
@@ -23,27 +23,42 @@ def rps():
 		elif u_choice == "R":
 			if c_choice == "S":
 				input("You won!")
+				return 1
 			else:
 				input("You lost!")
 		elif u_choice == "P":
 			if c_choice == "R":
 				input("You won!")
+				return 1
 			else:
 				input("You lost!")
 		elif u_choice == "S":
 			if c_choice == "P":
 				input("You won!")
+				return 1
 			else:
 				input("You lost!")
+		return 0
 	# this will run if the user gives an invalid response
 	except ValueError:
 		print("Invalid choice!")
-		rps()
+		return rps()
 
 
 # This is the code for running the program
 def main():
-	print("PH")
+	# Formatted as (visited, story progression)
+	# Starting Screen, 
+	world_location_data = ((0, 0), (0, 0))
+	#
+	world_items = ()
+	
+	# This is a set list of the allowed inputs from the user for
+	# each of their turns. It is auto formatted as a .lower()
+	allowed_inputs = ("north", "east", "south", "west")
+	
+	while True:
+		print(rps())
 
 
 if __name__ == "__main__":
