@@ -1,6 +1,14 @@
 from random import randint
 
 
+# Formatted as (visited, story progression)
+# Starting Screen,
+world_location_data = ([0, 0], [0, 0])
+cur_location = 0
+#
+world_items = ()
+
+
 def help():
 	"""
 Is used to generate a list of allowed inputs that the user
@@ -18,8 +26,25 @@ descriptive bit on what each command does.
 		print("Used to move the character down by one room.")
 	elif temp == "west":
 		print("Used to move the character to the left by one room.")
-	input()
 	print()
+
+
+def control(command, inp_list=(False, False, False, False)):
+	"""
+Takes the input of the user and then will attempt to let that think be executed
+	:param str command: The thing the player wants to do
+	:param tuple inp_list: List of allowed directions
+	"""
+	global cur_location
+	if command == "north" and inp_list[0]:
+		cur_location += 1
+	elif command == "east" and inp_list[1]:
+		cur_location += 4
+	elif command == "south" and inp_list[2]:
+		cur_location -= 1
+	elif command == "west" and inp_list[3]:
+		cur_location -= 4
+	print(cur_location)
 
 
 def rps():
@@ -74,13 +99,6 @@ against the computer.
 
 def main():
 	print()
-	# Formatted as (visited, story progression)
-	# Starting Screen, 
-	world_location_data = ([0, 0], [0, 0])
-	cur_location = 0
-	#
-	world_items = ()
-	
 	# This is a set list of the allowed inputs from the user for
 	# each of their turns. It is auto formatted as a .lower()
 	allowed_inputs = ("north", "east", "south", "west")
@@ -100,10 +118,13 @@ def main():
 			print("\nAs you join into this strange new digital world, you feel as if you are being watched.")
 			world_location_data[0][0] = 1
 		print("All around you are grand white pillars that seem to stretch high into the sky. The sky")
-		print("is painted a rich blend of light blues, fading to orange on the horizon as the sun just")
-		print("barely starts to bite into the horizon. The grass at your feet is long and soft but")
-		print("still seems to be well maintained. ")
-		print("There are exits to this room to the:\n  north\n")
+		print("is painted a rich blend of light blues, fading to orange as the sun just barely starts")
+		print("to bite into the horizon. The grass at your feet is long and soft but still seems to be")
+		print("well maintained. As you look around, you see one, singular door, seeming to go nowhere,")
+		print("standing to the north.\n")
+		print("There are exits to this room:\n  north")
+		allowed_exits = (True, True, True, True)
+		control(input("Where would you like to go?\n"), allowed_exits)
 
 
 if __name__ == "__main__":
