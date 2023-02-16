@@ -6,7 +6,7 @@ from random import randint
 world_location_data = ([0, 0], [0, 0])
 cur_location = 0
 #
-world_items = ()
+world_items = []
 
 
 def help():
@@ -16,24 +16,30 @@ can give. If the player chooses to, it will also give a more
 descriptive bit on what each command does.
 	"""
 	print("\n The commands are;")
-	print("north, east, south, west, help\n")
+	print("north, east, south, west, grab, room, help\n")
 	temp = input("Type one of these commands to learn more about it, otherwise, just press ENTER\n")
 	if temp == "north":
-		print("Used to move the character up by one room.")
+		print("\nUsed to move the character up by one room.\n")
 	elif temp == "east":
-		print("Used to move the character to the right by one room.")
+		print("\nUsed to move the character to the right by one room.\n")
 	elif temp == "south":
-		print("Used to move the character down by one room.")
+		print("\nUsed to move the character down by one room.\n")
 	elif temp == "west":
-		print("Used to move the character to the left by one room.")
+		print("\nUsed to move the character to the left by one room.\n")
+	elif temp == "grab":
+		print("\nLets the player try to grab an item from the room that they are in\n")
+	elif temp == "room":
+		print("\nUsed to re-display the current locations text.\n")
 	elif temp == "help":
-		print("Used to display a list of available commands as well as the option to give more details on a command")
+		print("\nUsed to display a list of available commands as well as the option to give more details")
+		print("on a command if the player asks for it.\n")
 	input("Press ENTER to continue")
 
 
 def control(command, inp_list=(False, False, False, False)):
 	"""
 Takes the input of the user and then will attempt to let that thing be executed
+
 	:param str command: The thing the player wants to do
 	:param tuple inp_list: List of allowed directions
 	"""
@@ -46,16 +52,36 @@ Takes the input of the user and then will attempt to let that thing be executed
 		cur_location -= 1
 	elif command == "west" and inp_list[3]:
 		cur_location -= 4
+	elif command == "grab":
+		print()
+		if cur_location == 1 and world_location_data[1][1] == 0:
+			world_items.append("Mouse Trap")
+			print("You yank the mouse trap off of the string and put it into you pocket.")
+			print("It comes with free cheese!\n")
+			world_location_data[1][1] = 1
+		else:
+			print("There seems to be nothing to grab!\n")
+		control(input("What would you like to do? (Try using only 1 word)\n"), inp_list)
+		return
+	elif command == "room":
+		pass
 	elif command == "help":
 		help()
-	
+		control(input("What would you like to do? (Try using only 1 word)\n"), inp_list)
+		return
+	else:
+		print("\nInvalid Response")
+		control(input("What would you like to do? (Try using only 1 word)\n"), inp_list)
+		return
+	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 
 def rps():
 	"""
 Takes no parameters. Lets the player play one round of Rock Paper Scissors
 against the computer.
-	:returns: 1 if player wins, 0 if player loses
+
+	:returns: 1 if player wins, 0 if player loses or ties
 	"""
 	# this determines the computer's choice
 	options = ("Rock", "Paper", "Scissors")
@@ -129,17 +155,18 @@ def main():
 			print("standing to the north.\n")
 			print("There are exits to this room:\n  north")
 			allowed_exits = (True, False, False, False)
+		# This is the code for the mousetrap room
 		if cur_location == 1:
 			v = world_location_data[1][0]
 			sp = world_location_data[1][1]
 			if not v:
-				print("You walk towards the tall, heavy wooden door and attempt to push it open. You hear a couple")
-				print("of clicks as it reluctantly slides open and you are greeted by a hospital looking room.")
+				print("You walk towards the tall, heavy wooden door and attempt to push it open. You hear a")
+				print("couple of clicks as it reluctantly slides open.")
 				world_location_data[1][0] = 1
 			print("You enter a white room, a deep blue tile rimming the bottom edges of the room. You can")
 			print("feel a slight lean in the floor, as if to guide you to the drain in the room. The room")
-			print("seems to be well lit, but there is no obvious light source that you can see, almost as if")
-			print("the walls themselves are providing the light for the room.")
+			print("seems to be well lit, but there is no obvious light source that you can see, almost as")
+			print("if the walls themselves are providing the light for the room.")
 			if sp == 0:
 				print("There is some form of mouse trap hanging from a thin string in the middle of the room.")
 			print("\nThere are exits to this room:")
