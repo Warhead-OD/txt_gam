@@ -3,7 +3,7 @@ from random import randint
 
 # Formatted as (visited, story progression)
 # Starting Screen,
-world_location_data = ([0, 0], [0, 0])
+world_location_data = ([0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0])
 cur_location = 0
 #
 world_items = []
@@ -33,6 +33,8 @@ descriptive bit on what each command does.
 	elif temp == "help":
 		print("\nUsed to display a list of available commands as well as the option to give more details")
 		print("on a command if the player asks for it.\n")
+	else:
+		print("\nInvalid Input\n")
 	input("Press ENTER to continue")
 
 
@@ -55,13 +57,12 @@ Takes the input of the user and then will attempt to let that thing be executed
 	elif command == "grab":
 		print()
 		if cur_location == 1 and world_location_data[1][1] == 0:
-			world_items.append("Mouse Trap")
-			print("You yank the mouse trap off of the string and put it into you pocket.")
-			print("It comes with free cheese!\n")
+			world_items.append("Coin")
+			print("You yank the coin off of the string and put it into you pocket.")
 			world_location_data[1][1] = 1
 		else:
-			print("There seems to be nothing to grab!\n")
-		control(input("What would you like to do? (Try using only 1 word)\n"), inp_list)
+			print("There seems to be nothing to grab!")
+		control(input("\nWhat would you like to do? (Try using only 1 word)\n"), inp_list)
 		return
 	elif command == "room":
 		pass
@@ -163,15 +164,23 @@ def main():
 				print("You walk towards the tall, heavy wooden door and attempt to push it open. You hear a")
 				print("couple of clicks as it reluctantly slides open.")
 				world_location_data[1][0] = 1
-			print("You enter a white room, a deep blue tile rimming the bottom edges of the room. You can")
+			print("You enter a white room, a deep blue tile lining the bottom edges of the room. You can")
 			print("feel a slight lean in the floor, as if to guide you to the drain in the room. The room")
 			print("seems to be well lit, but there is no obvious light source that you can see, almost as")
-			print("if the walls themselves are providing the light for the room.")
+			print("if the walls themselves are providing the light for the room. There is a large wooden")
+			print("door to the south and a lightly beaten dirt... trail to the east.")
 			if sp == 0:
-				print("There is some form of mouse trap hanging from a thin string in the middle of the room.")
+				print("There is some shiny looking coin hanging from a string in the middle of the room.")
 			print("\nThere are exits to this room:")
-			print("  east#not implemented, south")
-			allowed_exits = (False, False, True, False)
+			print("  east, south")
+			allowed_exits = (False, True, True, False)
+		# This is the code for the RPS room
+		if cur_location == 5:
+			v = world_location_data[2][0]
+			sp = world_location_data[2][1]
+			print("\nThere are exits to this room:")
+			print("  west")
+			allowed_exits = (False, False, False, True)
 		control(input("What would you like to do? (Try using only 1 word)\n"), allowed_exits)
 
 
