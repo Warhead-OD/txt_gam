@@ -76,7 +76,9 @@ Takes the input of the user and then will attempt to let that thing be executed
 		return
 	elif command == "use" and len(temp) == 2:
 		if temp[1] == "coin" and cur_location == 5 and world_items.count("coin"):
-			pass
+			print("You attempt to fit the coin into the thin slot on the box and it fits! There")
+			print("is a small ding and then the box seems to fold open, leaving a small microphone")
+			print("to be talked into. There is a small button #################################################")
 		else:
 			control("FAIL")
 			return
@@ -140,7 +142,7 @@ against the computer.
 		print("Invalid choice!")
 		return rps()
 # This RPS code is something that I have been working on for a while.
-# It IS copy and pasted from another one of my repos because I didn't
+# It **IS** copy and pasted from another one of my repos because I didn't
 # want to have to retype it or deal with the importing.
 # There are some modifications for the purposes of this program
 
