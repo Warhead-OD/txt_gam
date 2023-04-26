@@ -52,3 +52,20 @@ class Room:
 				print("That item is not in your inventory.")
 		else:
 			print("You have nothing to use.")
+
+	def pick_item(self, player):
+		"""
+		Used to attempt to pick up an item from the room.
+		Returns a statement depending on validity
+		:param player: The player that is being used.
+		:return:
+		"""
+		# checks to make sure that there is something to pick up
+		if self.item_pickups:
+			# displays the description text of the item to be picked up
+			print(f"\n{self.item_pickups[1]}")
+			# adds the item to the player's inventory
+			player.inventory.append(self.item_pickups[0])
+			self.item_pickups = []
+		else:
+			print("\nThere is nothing to pick up.")
