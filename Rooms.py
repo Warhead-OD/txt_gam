@@ -1,4 +1,5 @@
 from numpy import array
+from random import randint
 
 INPUT_HELP = {"north": "\nUsed to move the character up by one room.\n",
 		"east": "\nUsed to move the character to the right by one room.\n",
@@ -23,7 +24,7 @@ class Room:
 		self.item_pickups = []  # items to pick up, description text
 		self.usable_items = {}  # item name, usage text
 		self.allowed_exits = []  # allowed direction to leave the room
-		self.description = ""  # description of this room
+		self._description = ()  # intro room text, description of this room
 	
 	def use_item(self, player):
 		"""
