@@ -1,19 +1,24 @@
 from numpy import array
 from random import randint
 
-INPUT_HELP = {"north": "\nUsed to move the character up by one room.\n",
-		"east": "\nUsed to move the character to the right by one room.\n",
-		"south": "\nUsed to move the character down by one room.\n",
-		"west": "\nUsed to move the character to the left by one room.\n",
-		"grab": "\nLets the player try to grab an item from the room that they are in\n",
-		"use": "\nLets the player try to use a specified object.\n",
-		"room": "\nUsed to re-display the current locations text.\n",
-		"help": "\nUsed to display a list of available commands as well as the option to give more details\
-		\non a command if the player asks for it.\n"}
-DIRECTIONS = {"north": array([0, 1]),
-			"east": array([1, 0]),
-			"south": array([0, -1]),
-			"west": array([-1, 0])}
+INPUT_HELP = {
+	"north": "\nUsed to move the character up by one room.\n",
+	"east": "\nUsed to move the character to the right by one room.\n",
+	"south": "\nUsed to move the character down by one room.\n",
+	"west": "\nUsed to move the character to the left by one room.\n",
+	"use": "\nLets the player try to use a specified object.\n",
+	"grab": "\nLets the player try to grab an item from the room that they are in\n",
+	"room": "\nUsed to re-display the current locations text.\n",
+	"help": "\nUsed to display a list of available commands as well as the option to give more details\
+		\non a command if the player asks for it.\n",
+	"save": "\nUsed to save the current state of the game.\n",
+	"load": "\nUsed to load the game from a save file.\n",
+	"quit": "\nUsed to stop the game from running.\n"}
+DIRECTIONS = {
+	"north": array([0, 1]),
+	"east": array([1, 0]),
+	"south": array([0, -1]),
+	"west": array([-1, 0])}
 
 
 class Room:
@@ -53,7 +58,7 @@ class Room:
 				print("That item is not in your inventory.")
 		else:
 			print("You have nothing to use.")
-
+	
 	def pick_item(self, player):
 		"""
 		Used to attempt to pick up an item from the room.

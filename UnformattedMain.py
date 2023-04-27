@@ -148,7 +148,7 @@ against the computer.
 # There are some modifications for the purposes of this program
 
 
-def main():
+def ufmain():
 	print()
 	# This the variable that will be changed to hold the currently
 	# allowed exits to a room.
@@ -205,5 +205,4 @@ def main():
 		control(input("What would you like to do? (Try using only 1 word)\n"), allowed_exits)
 
 
-if __name__ == "__main__":
-	main()
+ufmain()
