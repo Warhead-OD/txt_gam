@@ -50,7 +50,7 @@ def main(player_data):
 		elif choice == "room":
 			pass
 		elif choice == "help":
-			pass
+			room.help_description()
 		elif choice == "save":
 			pass
 		elif choice == "load":

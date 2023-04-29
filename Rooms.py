@@ -75,3 +75,18 @@ class Room:
 			self.item_pickups = []
 		else:
 			print("\nThere is nothing to pick up.")
+	
+	def room_description(self, room):
+		pass
+	
+	def help_description(self):
+		print("\n The commands are:")
+		print("north, east, south, west, use, grab, room, help, save, load, quit\n")
+		helped = input("Type one of these commands to learn more about it, otherwise, just press ENTER\n")
+		
+		if helped in INPUT_HELP:
+			print(f"{INPUT_HELP[helped]}")
+		elif helped == "":
+			pass
+		else:
+			print("\nInvalid Input\n")
