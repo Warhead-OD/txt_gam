@@ -25,11 +25,15 @@ class Room:
 	"""
 	Room class for building new rooms
 	"""
-	def __init__(self):
+	def __init__(self, allowed_exits=[]):
+		self._explored = False
+		self.description = ("", "")  # intro room text, description of this room
 		self.item_pickups = []  # items to pick up, description text
 		self.usable_items = {}  # item name, usage text
-		self.allowed_exits = []  # allowed direction to leave the room
-		self._description = ()  # intro room text, description of this room
+		self.allowed_exits = allowed_exits  # allowed direction to leave the room
+	
+	def movement(self, player, choice):
+		player.cur_location = DIRECTIONS[choice]
 	
 	def use_item(self, player):
 		"""
@@ -38,6 +42,7 @@ class Room:
 		:param player: The player that is being used.
 		:return:
 		"""
+		print()
 		# checks if the user's inventory is empty
 		if player.inventory:
 			# displays the users current items in their inventory
@@ -58,6 +63,7 @@ class Room:
 				print("That item is not in your inventory.")
 		else:
 			print("You have nothing to use.")
+		print()
 	
 	def pick_item(self, player):
 		"""
@@ -66,6 +72,7 @@ class Room:
 		:param player: The player that is being used.
 		:return:
 		"""
+		print()
 		# checks to make sure that there is something to pick up
 		if self.item_pickups:
 			# displays the description text of the item to be picked up
@@ -74,12 +81,19 @@ class Room:
 			player.inventory.append(self.item_pickups[0])
 			self.item_pickups = []
 		else:
-			print("\nThere is nothing to pick up.")
+			print("There is nothing to pick up.")
+		print()
 	
-	def room_description(self, room):
-		pass
+	def room_description(self):
+		print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+		if not self._explored:
+			print(self.description[0])
+			self._explored = True
+		print(self.description[1])
+		print()
 	
-	def help_description(self):
+	@staticmethod
+	def help_description():
 		print("\n The commands are:")
 		print("north, east, south, west, use, grab, room, help, save, load, quit\n")
 		helped = input("Type one of these commands to learn more about it, otherwise, just press ENTER\n")
@@ -90,3 +104,25 @@ class Room:
 			pass
 		else:
 			print("\nInvalid Input\n")
+
+
+room_locations = {}  # stores the location of each room object to be called on
+
+room = Room(["north"])
+room.description = ("As you join into this strange new digital world, you feel as if you are being watched.",
+"All around you are grand white pillars that seem to stretch high into the sky. The sky\n\
+is painted a rich blend of light blues, fading to orange as the sun just barely starts\n\
+to bite into the horizon. The grass at your feet is long and soft but still seems to be\n\
+well maintained. As you look around, you see one, singular door, seeming to go nowhere,\n\
+standing to the north.")
+room_locations[(1, 1)] = room
+
+room = Room(["east", "south"])
+room.description = ("You walk towards the tall, heavy wooden door and attempt to push it open. You hear a\n\
+couple of clicks as it reluctantly slides open.",
+"You enter a white room, a deep blue tile lining the bottom edges of the room. You can\n\
+feel a slight lean in the floor, as if to guide you to the drain in the room. The room\n\
+seems to be well lit, but there is no obvious light source that you can see, almost as\n\
+if the walls themselves are providing the light for the room. There is a large wooden\n\
+door to the south and a lightly beaten dirt... trail to the east.")
+room_locations[(1, 2)] = room

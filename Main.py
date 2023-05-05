@@ -1,6 +1,6 @@
 from numpy import array
 
-from Rooms import Room, DIRECTIONS
+from Rooms import Room, room_locations, DIRECTIONS
 
 # Formatted as (visited, story progression)
 # Starting Screen,
@@ -39,16 +39,18 @@ def main(player_data):
 	"""
 	choice = ""
 	while choice != "quit":
-		room = Room()
+		room = room_locations.get(player.cur_location)
 		choice = input("What would you like to do (Use only 1 word)\n")
-		if choice == "use":
+		if choice in DIRECTIONS:
+			room.movement(player_data, choice)
+		elif choice == "use":
 			# TEST LATER
 			# room.use_item(player_data)
-			pass
+			room.use_item(player_data)
 		elif choice == "grab":
-			pass
+			room.pick_item(player_data)
 		elif choice == "room":
-			pass
+			room.room_description()
 		elif choice == "help":
 			room.help_description()
 		elif choice == "save":
