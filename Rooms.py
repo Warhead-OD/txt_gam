@@ -33,7 +33,11 @@ class Room:
 		self.allowed_exits = allowed_exits  # allowed direction to leave the room
 	
 	def movement(self, player, choice):
-		player.cur_location = DIRECTIONS[choice]
+		if choice in self.allowed_exits:
+			player.cur_location = DIRECTIONS[choice]
+			room.room_description()
+		else:
+			print("\nYou can't go that direction.\n")
 	
 	def use_item(self, player):
 		"""
@@ -86,11 +90,18 @@ class Room:
 	
 	def room_description(self):
 		print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+		# prints a room introduction script if it is the player's first time
+		# in the given room
 		if not self._explored:
 			print(self.description[0])
 			self._explored = True
+		
+		# prints the main bulk of the room description
 		print(self.description[1])
-		print()
+		
+		# prints the allowed exits to a given room
+		exit_string = str(self.allowed_exits).replace("'", "")
+		print(f"\nThere are exits to this room:\n  {exit_string[1:-1]}\n")
 	
 	@staticmethod
 	def help_description():

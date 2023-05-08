@@ -37,6 +37,13 @@ def main(player_data):
 	:param player_data: The current players object variables
 	:return:
 	"""
+	print("\nWelcome to my humble Text Game!\n")
+	
+	if input("Would you like the list of commands to the game? yes/no\n") == "yes":
+		Room.help_description()
+	
+	Room.room_description(room_locations.get(player.cur_location))
+	
 	choice = ""
 	while choice != "quit":
 		room = room_locations.get(player.cur_location)
