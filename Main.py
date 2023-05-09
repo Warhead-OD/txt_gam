@@ -1,5 +1,3 @@
-from numpy import array
-
 from Rooms import Room, room_locations, DIRECTIONS
 
 # Formatted as (visited, story progression)

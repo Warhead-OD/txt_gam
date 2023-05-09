@@ -28,7 +28,7 @@ class Room:
 	def __init__(self, allowed_exits=[]):
 		self._explored = False
 		self.description = ("", "")  # intro room text, description of this room
-		self.item_pickups = []  # items to pick up, description text
+		self.item_pickups = []  # items to pick up, pickup description, description text
 		self.usable_items = {}  # item name, usage text
 		self.allowed_exits = allowed_exits  # allowed direction to leave the room
 	
@@ -80,15 +80,19 @@ class Room:
 		# checks to make sure that there is something to pick up
 		if self.item_pickups:
 			# displays the description text of the item to be picked up
-			print(f"\n{self.item_pickups[1]}")
+			print(f"{self.item_pickups[2]}")
 			# adds the item to the player's inventory
 			player.inventory.append(self.item_pickups[0])
-			self.item_pickups = []
+			self.item_pickups.clear()
 		else:
 			print("There is nothing to pick up.")
 		print()
 	
 	def room_description(self):
+		"""
+		Prints a description of the room that is pulled from the description var
+		:return:
+		"""
 		print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 		# prints a room introduction script if it is the player's first time
 		# in the given room
@@ -98,6 +102,9 @@ class Room:
 		
 		# prints the main bulk of the room description
 		print(self.description[1])
+		# prints any pick-able items that are in the room
+		if self.item_pickups:
+			print(self.item_pickups[1])
 		
 		# prints the allowed exits to a given room
 		exit_string = str(self.allowed_exits).replace("'", "")
@@ -136,4 +143,7 @@ feel a slight lean in the floor, as if to guide you to the drain in the room. Th
 seems to be well lit, but there is no obvious light source that you can see, almost as\n\
 if the walls themselves are providing the light for the room. There is a large wooden\n\
 door to the south and a lightly beaten dirt... trail to the east.")
+room.item_pickups = ["coin", "\
+There is some shiny looking coin hanging from a string in the middle of the room.", "\
+You yank the coin off of the string and put it into your pocket."]
 room_locations[(1, 2)] = room
