@@ -47,7 +47,9 @@ def main(player_data):
 		room = room_locations.get(player.cur_location)
 		choice = input("What would you like to do (Use only 1 word)\n")
 		if choice in DIRECTIONS:
-			room.movement(player_data, choice)
+			if room.movement(player_data, choice):
+				room = room_locations.get(player.cur_location)
+				room.room_description()
 		elif choice == "use":
 			# TEST LATER
 			# room.use_item(player_data)

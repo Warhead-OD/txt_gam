@@ -35,7 +35,7 @@ class Room:
 	def movement(self, player, choice):
 		if choice in self.allowed_exits:
 			player.cur_location = DIRECTIONS[choice]
-			room.room_description()
+			return True
 		else:
 			print("\nYou can't go that direction.\n")
 	
@@ -126,24 +126,31 @@ class Room:
 
 room_locations = {}  # stores the location of each room object to be called on
 
-room = Room(["north"])
-room.description = ("As you join into this strange new digital world, you feel as if you are being watched.",
+temp_room = Room(["north"])
+temp_room.description = ("As you join into this strange new digital world, you feel as if you are being watched.",
 "All around you are grand white pillars that seem to stretch high into the sky. The sky\n\
 is painted a rich blend of light blues, fading to orange as the sun just barely starts\n\
 to bite into the horizon. The grass at your feet is long and soft but still seems to be\n\
 well maintained. As you look around, you see one, singular door, seeming to go nowhere,\n\
 standing to the north.")
-room_locations[(1, 1)] = room
+room_locations[(1, 1)] = temp_room
 
-room = Room(["east", "south"])
-room.description = ("You walk towards the tall, heavy wooden door and attempt to push it open. You hear a\n\
+temp_room = Room(["east", "south"])
+temp_room.description = ("You walk towards the tall, heavy wooden door and attempt to push it open. You hear a\n\
 couple of clicks as it reluctantly slides open.",
-"You enter a white room, a deep blue tile lining the bottom edges of the room. You can\n\
+"You enter a white room, a deep blue tile lining the bottom edges of the walls. You can\n\
 feel a slight lean in the floor, as if to guide you to the drain in the room. The room\n\
 seems to be well lit, but there is no obvious light source that you can see, almost as\n\
-if the walls themselves are providing the light for the room. There is a large wooden\n\
-door to the south and a lightly beaten dirt... trail to the east.")
-room.item_pickups = ["coin", "\
-There is some shiny looking coin hanging from a string in the middle of the room.", "\
-You yank the coin off of the string and put it into your pocket."]
-room_locations[(1, 2)] = room
+if the walls themselves are providing the light to illuminate the area. There is a large\n\
+wooden door to the south and a lightly beaten dirt... trail to the east.")
+temp_room.item_pickups = ["coin",
+						"There is some shiny looking coin hanging from a string in the middle of the room.",
+						"You yank the coin off of the string and put it into your pocket."]
+room_locations[(1, 2)] = temp_room
+
+temp_room = Room(["west"])
+temp_room.description = ("You walk down the dirt trail from the hospital room. How strange a place for a path.", "\
+You are now in a grand field that seems to stretch on forever. Towards the ends of the\n\
+world, the ground seems to lilt into the sky. There is a standing table off to one side\n\
+of the field that has a small slot in it, as if to guide you to put something into it.")
+room_locations[(2, 2)] = temp_room
