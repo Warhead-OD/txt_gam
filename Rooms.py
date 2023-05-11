@@ -25,6 +25,10 @@ class Room:
 	Room class for building new rooms
 	"""
 	def __init__(self, allowed_exits=[]):
+		"""
+		Initiates a Room object's variables to (mostly) empty collections.
+		:param allowed_exits: The exits that are allowed for a room. Defaults to no exits.
+		"""
 		self._explored = False
 		self.description = ["", ""]  # intro room text, description of this room
 		self.item_pickups = []  # items to pick up, pickup description, description text
@@ -120,6 +124,11 @@ class Room:
 	
 	@staticmethod
 	def help_description():
+		"""
+		Prints the allowed inputs from the user.
+		Will display more details on a command if prompted.
+		:return:
+		"""
 		print("\n The commands are:")
 		print("north, east, south, west, use, grab, room, help, save, load, quit\n")
 		helped = input("Type one of these commands to learn more about it, otherwise, just press ENTER\n")
@@ -169,6 +178,12 @@ room_locations[(2, 2)] = temp_room
 
 
 def room_code(location):
+	"""
+	Runs the unique code on a per-room basis.
+	Based on the items that have been used on the room.
+	:param location: Is the player's current location
+	:return:
+	"""
 	if location in room_locations:
 		if location == (2, 2):
 			room_locations[location].description[1] = "WOO HOO"

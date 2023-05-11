@@ -50,18 +50,25 @@ def main(player_data):
 			if room.movement(player_data, choice):
 				room = room_locations.get(player.cur_location)
 				room.room_description(player.cur_location)
+		
 		elif choice == "use":
 			room.use_item(player_data)
+		
 		elif choice == "grab":
 			room.pick_item(player_data)
+		
 		elif choice == "room":
 			room.room_description(player.cur_location)
+		
 		elif choice == "help":
 			room.help_description()
+		
 		elif choice == "save":
 			pass
+		
 		elif choice == "load":
 			pass
+		
 		elif choice == "quit":
 			pass
 
