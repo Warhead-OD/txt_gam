@@ -40,7 +40,7 @@ def main(player_data):
 	if input("Would you like the list of commands to the game? yes/no\n") == "yes":
 		Room.help_description()
 	
-	Room.room_description(room_locations.get(player.cur_location))
+	Room.room_description(room_locations.get(player.cur_location), player.cur_location)
 	
 	choice = ""
 	while choice != "quit":
@@ -49,15 +49,13 @@ def main(player_data):
 		if choice in DIRECTIONS:
 			if room.movement(player_data, choice):
 				room = room_locations.get(player.cur_location)
-				room.room_description()
+				room.room_description(player.cur_location)
 		elif choice == "use":
-			# TEST LATER
-			# room.use_item(player_data)
 			room.use_item(player_data)
 		elif choice == "grab":
 			room.pick_item(player_data)
 		elif choice == "room":
-			room.room_description()
+			room.room_description(player.cur_location)
 		elif choice == "help":
 			room.help_description()
 		elif choice == "save":

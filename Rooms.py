@@ -1,5 +1,4 @@
 from numpy import array
-from random import randint
 
 INPUT_HELP = {
 	"north": "\nUsed to move the character up by one room.\n",
@@ -27,12 +26,18 @@ class Room:
 	"""
 	def __init__(self, allowed_exits=[]):
 		self._explored = False
-		self.description = ("", "")  # intro room text, description of this room
+		self.description = ["", ""]  # intro room text, description of this room
 		self.item_pickups = []  # items to pick up, pickup description, description text
 		self.usable_items = {}  # item name, usage text
 		self.allowed_exits = allowed_exits  # allowed direction to leave the room
 	
 	def movement(self, player, choice):
+		"""
+		This is the function that allows the player to move around within the game world.
+		:param player: The player object to be used in movement.
+		:param choice: The direction that the player is trying to go.
+		:return:
+		"""
 		if choice in self.allowed_exits:
 			player.cur_location = DIRECTIONS[choice]
 			return True
@@ -58,6 +63,7 @@ class Room:
 				# checks to see if the item can be used in the current room
 				if to_use in self.usable_items:
 					# prints the usage text of the used item
+					print()
 					print(self.usable_items[to_use])
 					player.inventory.remove(to_use)
 					del self.usable_items[to_use]
@@ -88,7 +94,7 @@ class Room:
 			print("There is nothing to pick up.")
 		print()
 	
-	def room_description(self):
+	def room_description(self, player_location):
 		"""
 		Prints a description of the room that is pulled from the description var
 		:return:
@@ -105,6 +111,8 @@ class Room:
 		# prints any pick-able items that are in the room
 		if self.item_pickups:
 			print(self.item_pickups[1])
+		
+		room_code(player_location)
 		
 		# prints the allowed exits to a given room
 		exit_string = str(self.allowed_exits).replace("'", "")
@@ -127,30 +135,43 @@ class Room:
 room_locations = {}  # stores the location of each room object to be called on
 
 temp_room = Room(["north"])
-temp_room.description = ("As you join into this strange new digital world, you feel as if you are being watched.",
+temp_room.description = ["As you join into this strange new digital world, you feel as if you are being watched.",
 "All around you are grand white pillars that seem to stretch high into the sky. The sky\n\
 is painted a rich blend of light blues, fading to orange as the sun just barely starts\n\
 to bite into the horizon. The grass at your feet is long and soft but still seems to be\n\
 well maintained. As you look around, you see one, singular door, seeming to go nowhere,\n\
-standing to the north.")
+standing to the north."]
 room_locations[(1, 1)] = temp_room
 
 temp_room = Room(["east", "south"])
-temp_room.description = ("You walk towards the tall, heavy wooden door and attempt to push it open. You hear a\n\
+temp_room.description = ["You walk towards the tall, heavy wooden door and attempt to push it open. You hear a\n\
 couple of clicks as it reluctantly slides open.",
 "You enter a white room, a deep blue tile lining the bottom edges of the walls. You can\n\
 feel a slight lean in the floor, as if to guide you to the drain in the room. The room\n\
 seems to be well lit, but there is no obvious light source that you can see, almost as\n\
 if the walls themselves are providing the light to illuminate the area. There is a large\n\
-wooden door to the south and a lightly beaten dirt... trail to the east.")
+wooden door to the south and a lightly beaten dirt... trail to the east."]
 temp_room.item_pickups = ["coin",
 						"There is some shiny looking coin hanging from a string in the middle of the room.",
 						"You yank the coin off of the string and put it into your pocket."]
 room_locations[(1, 2)] = temp_room
 
 temp_room = Room(["west"])
-temp_room.description = ("You walk down the dirt trail from the hospital room. How strange a place for a path.", "\
+temp_room.description = ["You walk down the dirt trail from the hospital room. How strange a place for a path.", "\
 You are now in a grand field that seems to stretch on forever. Towards the ends of the\n\
 world, the ground seems to lilt into the sky. There is a standing table off to one side\n\
-of the field that has a small slot in it, as if to guide you to put something into it.")
+of the field that has a small slot in it, as if to guide you to put something into it."]
+temp_room.usable_items["coin"] = "You attempt to fit the coin into the thin slot on the box and it fits! There is a\n\
+small ding and then the box seems to fold open, leaving a small microphone to be\n\
+talked into. There are three small buttons that appear. They bear the following images:\n\
+a rock, a piece of paper, and a pair of scissors."
 room_locations[(2, 2)] = temp_room
+
+
+def room_code(location):
+	if location in room_locations:
+		if location == (2, 2):
+			room_locations[location].description[1] = "WOO HOO"
+	else:
+		print(location)
+		exit(404)
