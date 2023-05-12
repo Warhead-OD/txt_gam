@@ -1,4 +1,5 @@
 from Rooms import Room, room_locations, DIRECTIONS
+import pickle
 
 # Formatted as (visited, story progression)
 # Starting Screen,
@@ -29,10 +30,26 @@ class Player:
 player = Player()
 
 
-def main(player_data):
+def save_game():
+	with open("game_stats.dat", "wb") as f:
+		data_dict = {"p_data": player, "r_data": room_locations}
+		pickle.dump(data_dict, f)
+
+
+def load_game():
+	with open("game_stats.dat", "rb") as f:
+		global player
+		global room_locations
+
+		data_dict = pickle.load(f)
+		print(data_dict)
+		player = data_dict["p_data"]
+		room_locations = data_dict["r_data"]
+
+
+def main():
 	"""
 	The main running function that is used to run the game.
-	:param player_data: The current players object variables
 	:return:
 	"""
 	print("\nWelcome to my humble Text Game!\n")
@@ -47,15 +64,15 @@ def main(player_data):
 		room = room_locations.get(player.cur_location)
 		choice = input("What would you like to do (Use only 1 word)\n")
 		if choice in DIRECTIONS:
-			if room.movement(player_data, choice):
+			if room.movement(player, choice):
 				room = room_locations.get(player.cur_location)
 				room.room_description(player.cur_location)
 		
 		elif choice == "use":
-			room.use_item(player_data)
+			room.use_item(player)
 		
 		elif choice == "grab":
-			room.pick_item(player_data)
+			room.pick_item(player)
 		
 		elif choice == "room":
 			room.room_description(player.cur_location)
@@ -64,14 +81,16 @@ def main(player_data):
 			room.help_description()
 		
 		elif choice == "save":
-			pass
+			save_game()
+			print(player.cur_location)
 		
 		elif choice == "load":
-			pass
+			load_game()
+			print(player.cur_location)
 		
 		elif choice == "quit":
 			pass
 
 
 if __name__ == "__main__":
-	main(player)
+	main()

@@ -42,8 +42,10 @@ class Room:
 		:param choice: The direction that the player is trying to go.
 		:return:
 		"""
+		print(player.cur_location)
 		if choice in self.allowed_exits:
 			player.cur_location = DIRECTIONS[choice]
+			print(player.cur_location)
 			return True
 		else:
 			print("\nYou can't go that direction.\n")
