@@ -127,6 +127,7 @@ class Room:
 		if self.item_pickups:
 			print(self.item_pickups[1])
 		
+		# prints the current room code
 		room_code(player_location)
 		
 		# prints the allowed exits to a given room
@@ -152,7 +153,26 @@ class Room:
 			print("\nInvalid Input\n")
 
 
-room_locations = {}  # stores the location of each room object to be called on
+# stores the location of each room object to be called on
+room_locations = {}
+
+
+def room_code(location):
+	"""
+	Runs the unique code on a per-room basis.
+	Based on the items that have been used on the room.
+	:param location: Is the player's current location
+	:return:
+	"""
+	global room_locations
+	if location in room_locations:
+		if location == (2, 2):
+			room_locations[location].description[1] = "WOO HOO"
+	
+	else:
+		print(location)
+		exit(404)
+
 
 temp_room = Room(["north"])
 temp_room.description = ["As you join into this strange new digital world, you feel as if you are being watched.",
@@ -186,26 +206,3 @@ small ding and then the box seems to fold open, leaving a small microphone to be
 talked into. There are three small buttons that appear. They bear the following images:\n\
 a rock, a piece of paper, and a pair of scissors."
 room_locations[(2, 2)] = temp_room
-
-
-def room_code(location):
-	"""
-	Runs the unique code on a per-room basis.
-	Based on the items that have been used on the room.
-	:param location: Is the player's current location
-	:return:
-	"""
-	global room_locations
-	if location in room_locations:
-		if location == (2, 2):
-			for room in room_locations:
-				print(f"{room}: {room_locations[room]}")
-			print("\n\n")
-			room_locations[location].description[1] = "WOO HOO"
-			print("\n\n")
-			for room in room_locations:
-				print(f"{room}: {room_locations[room]}")
-			
-	else:
-		print(location)
-		exit(404)

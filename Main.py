@@ -1,6 +1,5 @@
 from Rooms import Room, room_locations, DIRECTIONS
 import pickle
-import json
 
 # Formatted as (visited, story progression)
 # Starting Screen,
@@ -28,38 +27,32 @@ class Player:
 		self._cur_location += direction
 
 
+data_dict = {}
 player = Player()
 
 
-class PointEncoderP(json.JSONEncoder):
-	def default(self, obj):
-		return [obj.inventory, obj.cur_location]
-
-
-class PointEncoderR(json.JSONEncoder):
-	def default(self, obj):
-		return [obj.explored, obj.description, obj.item_pickups, obj.usable_items, obj.allowed_exits]
-
-
 def save_game():
-	with open("game_stats.json", "w") as f:
-		data_dict = {"p_data": player, "r_data": room_locations}
-		print(data_dict)
-		data_dict = json.dumps(data_dict["p_data"], cls=PointEncoderP)
-		data_dict += json.dumps(data_dict["r_data"], cls=PointEncoderR)
-		json.dump(data_dict, f)
+	"""
+	Saves the game to a file
+	:return:
+	"""
+	global player, room_locations
+	data_dict["p_data"] = player
+	data_dict["r_data"] = room_locations
+	with open("game_stats.dat", "wb") as f:
+		pickle.dump(data_dict, f)
 
 
 def load_game():
-	with open("game_stats.json", "r") as f:
-		global player
-		global room_locations
-		# global data_dict
-		
-		data_dict = json.load(f)
-		print(data_dict)
-		player = data_dict["p_data"]
-		room_locations = data_dict["r_data"]
+	"""
+	Loads the game from a file
+	:return:
+	"""
+	global player, room_locations, data_dict
+	with open("game_stats.dat", "rb") as f:
+		data_dict = pickle.load(f)
+	player = data_dict["p_data"]
+	room_locations.update(data_dict["r_data"])
 
 
 def main():
@@ -67,6 +60,8 @@ def main():
 	The main running function that is used to run the game.
 	:return:
 	"""
+	global player, room_locations
+	
 	print("\nWelcome to my humble Text Game!\n")
 	
 	if input("Would you like the list of commands to the game? yes/no\n") == "yes":
@@ -97,11 +92,11 @@ def main():
 		
 		elif choice == "save":
 			save_game()
-			print(player.cur_location)
+			print("\nGame Saved\n")
 		
 		elif choice == "load":
 			load_game()
-			print(player.cur_location)
+			print("\nGame Loaded\n")
 		
 		elif choice == "quit":
 			pass
