@@ -1,5 +1,6 @@
 from Rooms import Room, room_locations, DIRECTIONS
 import pickle
+import json
 
 # Formatted as (visited, story progression)
 # Starting Screen,
@@ -30,18 +31,32 @@ class Player:
 player = Player()
 
 
+class PointEncoderP(json.JSONEncoder):
+	def default(self, obj):
+		return [obj.inventory, obj.cur_location]
+
+
+class PointEncoderR(json.JSONEncoder):
+	def default(self, obj):
+		return [obj.explored, obj.description, obj.item_pickups, obj.usable_items, obj.allowed_exits]
+
+
 def save_game():
-	with open("game_stats.dat", "wb") as f:
+	with open("game_stats.json", "w") as f:
 		data_dict = {"p_data": player, "r_data": room_locations}
-		pickle.dump(data_dict, f)
+		print(data_dict)
+		data_dict = json.dumps(data_dict["p_data"], cls=PointEncoderP)
+		data_dict += json.dumps(data_dict["r_data"], cls=PointEncoderR)
+		json.dump(data_dict, f)
 
 
 def load_game():
-	with open("game_stats.dat", "rb") as f:
+	with open("game_stats.json", "r") as f:
 		global player
 		global room_locations
-
-		data_dict = pickle.load(f)
+		# global data_dict
+		
+		data_dict = json.load(f)
 		print(data_dict)
 		player = data_dict["p_data"]
 		room_locations = data_dict["r_data"]

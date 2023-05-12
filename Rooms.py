@@ -29,11 +29,20 @@ class Room:
 		Initiates a Room object's variables to (mostly) empty collections.
 		:param allowed_exits: The exits that are allowed for a room. Defaults to no exits.
 		"""
-		self._explored = False
+		self.explored = False
 		self.description = ["", ""]  # intro room text, description of this room
 		self.item_pickups = []  # items to pick up, pickup description, description text
 		self.usable_items = {}  # item name, usage text
 		self.allowed_exits = allowed_exits  # allowed direction to leave the room
+	
+	def __str__(self):
+		strings = ""
+		strings += f"Is Explored: {self.explored}\n"
+		strings += f"Allowed Exits: {self.allowed_exits}\n"
+		strings += f"Item Pickups: {self.item_pickups}\n"
+		strings += f"Usable Items: {self.usable_items}\n"
+		strings += f"Description: {self.description}"
+		return strings
 	
 	def movement(self, player, choice):
 		"""
@@ -108,9 +117,9 @@ class Room:
 		print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 		# prints a room introduction script if it is the player's first time
 		# in the given room
-		if not self._explored:
+		if not self.explored:
 			print(self.description[0])
-			self._explored = True
+			self.explored = True
 		
 		# prints the main bulk of the room description
 		print(self.description[1])
@@ -186,9 +195,17 @@ def room_code(location):
 	:param location: Is the player's current location
 	:return:
 	"""
+	global room_locations
 	if location in room_locations:
 		if location == (2, 2):
+			for room in room_locations:
+				print(f"{room}: {room_locations[room]}")
+			print("\n\n")
 			room_locations[location].description[1] = "WOO HOO"
+			print("\n\n")
+			for room in room_locations:
+				print(f"{room}: {room_locations[room]}")
+			
 	else:
 		print(location)
 		exit(404)
