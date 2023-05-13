@@ -13,7 +13,7 @@ def rps():
 	options_short = ("R", "P", "S")
 	c_choice_l = options[randint(0, 2)]
 	# this will determine the user's choice
-	u_choice = input("Rock, Paper, or Scissors?\n")
+	u_choice = input("(R)ock, (P)aper, or (S)cissors?\n")
 	
 	# this determines and displays the winner
 	try:

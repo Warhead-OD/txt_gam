@@ -56,6 +56,9 @@ def main():
 	
 	print("\nWelcome to my humble Text Game!\n")
 	
+	print("A quick note, if you are in a room and interact with it, you will sometimes\n\
+need to run the 'room' command so that you can notice the changes in the room.\n")
+	
 	if input("Would you like the list of commands to the game? yes/no\n") == "yes":
 		Room.help_description()
 	

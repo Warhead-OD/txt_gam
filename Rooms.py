@@ -82,6 +82,9 @@ class Room:
 					print(self.usable_items[to_use])
 					player.inventory.remove(to_use)
 					del self.usable_items[to_use]
+					if to_use == "blade":
+						input("\nYou have beaten the game! Press enter to quit!")
+						exit("Winner Winner Chicken Dinner!")
 					self.room_progression += 1
 				else:
 					print("That item cannot be used here.")
@@ -122,6 +125,9 @@ class Room:
 			print(self.description[0])
 			self.explored = True
 		
+		# prints the current room code
+		room_code(player_location, True)
+		
 		# prints the main bulk of the room description
 		print(self.description[1])
 		# prints any pick-able items that are in the room
@@ -158,11 +164,12 @@ class Room:
 room_locations = {}
 
 
-def room_code(location):
+def room_code(location, first_time=False):
 	"""
 	Runs the unique code on a per-room basis.
 	Based on the items that have been used on the room.
 	:param location: Is the player's current location
+	:param first_time: Is a boolean that is used to determine if the player has been in the room before
 	:return:
 	"""
 	global room_locations
@@ -175,15 +182,35 @@ of the field that has one standing table with a microphone on it. There are thre
 on the table resembling a different image on each one: rock, paper, and scissors. There\n\
 is a large metalic wall to the south that seems to be blocking your path, however, you seem\n\
 to be able to go in all other directions."
-				if input("\nWould you like to play Rock, Paper, Scissors? (yes/no)\n") == "yes":
-					wins = 0
-					input("\nYou must win 3 times to pass. Press ENTER to begin.\n")
-					while wins < 3:
-						wins += rps()
-						print(f"You have won {wins} times.\n")
-					input("You have won! A key appears on the table.")
-					room_locations[location].item_pickups = ["key", "\nThere is a key on the table.", "You pick up the key."]
-					room_locations[location].room_progression += 1
+				if not first_time:
+					if input("\nWould you like to play Rock, Paper, Scissors? (yes/no)\n") == "yes":
+						wins = 0
+						input("\nYou must win 3 times to pass. Press ENTER to begin.\n")
+						while wins < 3:
+							wins += rps()
+							print(f"You have won {wins} times.\n")
+						input("You have won! A key appears on the table.")
+						room_locations[location].item_pickups = ["key", "\nThere is a key on the table.", "You pick up the key."]
+						room_locations[location].room_progression += 1
+			if room_locations[location].room_progression == 3:
+				room_locations[location].description[1] = "You in a grand field that seems to stretch on forever. Towards the ends of the\n\
+world, the ground seems to lilt into the sky. There is a standing table off to one side\n\
+of the field that has one standing table with a microphone on it. There are three buttons\n\
+on the table resembling a different image on each one: rock, paper, and scissors. An important\n\
+path lies to the south."
+				room_locations[location].allowed_exits = ["north", "south", "west"]
+		elif location == (2, 3):
+			if room_locations[location].room_progression == 1:
+				room_locations[location].description[1] = "The walls of this room are adorned with copper pipes and gears. The floor looks to be\n\
+made of a dark wood, but it is hard to tell with all of the pipes and gears. There is a\n\
+large clock in the center of the room that ticks away, seemingly powered by steam. There\n\
+are two doors in this room, one to the south and one to the east."
+				room_locations[location].allowed_exits = ["east", "south"]
+		elif location == (3, 3):
+			if "orb" not in room_locations[location].item_pickups:
+				room_locations[location].description[1] = "You enter a spacious chamber that crackles with magic. The walls are lined with shelves\n\
+and purple drapes. There is a massive crystal chandelier that hangs from the ceiling,\n\
+casting rainbows of light across the room."
 	
 	else:
 		print(location)
@@ -212,7 +239,16 @@ temp_room.item_pickups = ["coin",
 						"You yank the coin off of the string and put it into your pocket."]
 room_locations[(1, 2)] = temp_room
 
-temp_room = Room(["north", "/east", "west"])
+temp_room = Room(["north"])
+temp_room.description = ["You walk past the molten metal of the wall towards what looks to be a massive arena.",
+						"You enter a grand coliseum, a large beast resides in the center. He is to be feared,\n\
+though the slightest blade would peirce his hide. To win the game, you must eliminate the beast."]
+temp_room.usable_items["blade"] = "You approach the beast, blade in hand. He seems to be unphased by your presence.\n\
+he takes a step towards you and you swing your blade. It pierces his hide and he falls\n\
+to the ground. You have won the game."
+room_locations[(2, 1)] = temp_room
+
+temp_room = Room(["north", "west"])
 temp_room.description = ["You walk down the dirt trail from the hospital room. How strange a place for a path.", "\
 You are now in a grand field that seems to stretch on forever. Towards the ends of the\n\
 world, the ground seems to lilt into the sky. There is a standing table off to one side\n\
@@ -223,15 +259,31 @@ temp_room.usable_items["coin"] = "You attempt to fit the coin into the thin slot
 small ding and then the box seems to fold open, leaving a small microphone to be\n\
 talked into. There are three small buttons that appear. They bear the following images:\n\
 a rock, a piece of paper, and a pair of scissors."
+temp_room.usable_items["orb"] = "You hold the orb up to the wall and watch as it melts away, revealing a new path."
 room_locations[(2, 2)] = temp_room
 
-temp_room = Room(["/east", "south"])
+temp_room = Room(["south"])
 temp_room.description = ["As you are walking, you enter some steampunk area. An industrial fantasy you could say.", "\
 The walls of this room are adorned with copper pipes and gears. The floor looks to be\n\
 made of a dark wood, but it is hard to tell with all of the pipes and gears. There is a\n\
 large clock in the center of the room that ticks away, seemingly powered by steam. There\n\
-are two doors in this room, one to the south and one to the east."]
+are two doors in this room, one to the south and one to the east. The east door is locked."]
 temp_room.item_pickups = ["blade",
 						"Upon further inspection, one of the clock hands seems to be made of a very sharp metal.",
 						"You pull this makeshift blade off of the clock, sliding it into your pocket."]
+temp_room.usable_items["key"] = "You slide the key into the lock of the east door and it clicks open. You suddenly\n\
+hear hushed whispers come to an abrupt stop. The door slides itself open."
 room_locations[(2, 3)] = temp_room
+
+temp_room = Room(["west"])
+temp_room.description = ["As you enter into the room, you feel a magical tingling sensation fall over you.", "\
+You enter a spacious chamber that crackles with magic. The walls are lined with shelves\n\
+and purple drapes. On a stack of dusty tomes, you see a small, glowing orb. It seems to\n\
+invite you to pick it up. There is also a massive crystal chandelier that hangs from the\n\
+ceiling, casting rainbows of light across the room. The glowing image of the orb seems to\n\
+pulse and hum, giving you a bad feeling deep in your gut. A feeling of dread sets over you."]
+temp_room.item_pickups = ["orb",
+                          "The orb seems to be pulling you towards it, unrelenting.",
+                          "You pick up the orb and it seems to pulse with energy. You feel a surge of power.\n\
+You hear a loud, metalic screech, something important you would assume."]
+room_locations[(3, 3)] = temp_room
