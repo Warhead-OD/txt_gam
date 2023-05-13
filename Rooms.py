@@ -51,10 +51,8 @@ class Room:
 		:param choice: The direction that the player is trying to go.
 		:return:
 		"""
-		print(player.cur_location)
 		if choice in self.allowed_exits:
 			player.cur_location = DIRECTIONS[choice]
-			print(player.cur_location)
 			return True
 		else:
 			print("\nYou can't go that direction.\n")
@@ -167,7 +165,12 @@ def room_code(location):
 	global room_locations
 	if location in room_locations:
 		if location == (2, 2):
-			room_locations[location].description[1] = "WOO HOO"
+			room_locations[location].description[1] = "You in a grand field that seems to stretch on forever. Towards the ends of the\n\
+world, the ground seems to lilt into the sky. There is a standing table off to one side\n\
+of the field that has one standing table with a microphone on it. There are three buttons\n\
+on the table resembling a different image on each one: rock, paper, and scissors. There\n\
+is a large metalic wall to the south that seems to be blocking your path, however, you seem\n\
+to be able to go in all other directions."
 	
 	else:
 		print(location)
@@ -196,13 +199,26 @@ temp_room.item_pickups = ["coin",
 						"You yank the coin off of the string and put it into your pocket."]
 room_locations[(1, 2)] = temp_room
 
-temp_room = Room(["west"])
+temp_room = Room(["north", "/east", "west"])
 temp_room.description = ["You walk down the dirt trail from the hospital room. How strange a place for a path.", "\
 You are now in a grand field that seems to stretch on forever. Towards the ends of the\n\
 world, the ground seems to lilt into the sky. There is a standing table off to one side\n\
-of the field that has a small slot in it, as if to guide you to put something into it."]
+of the field that has a small slot in it, as if to guide you to put something into it.\n\
+There is a large metalic wall to the south that seems to be blocking your path however\n\
+you seem to be able to go in all other directions."]
 temp_room.usable_items["coin"] = "You attempt to fit the coin into the thin slot on the box and it fits! There is a\n\
 small ding and then the box seems to fold open, leaving a small microphone to be\n\
 talked into. There are three small buttons that appear. They bear the following images:\n\
 a rock, a piece of paper, and a pair of scissors."
 room_locations[(2, 2)] = temp_room
+
+temp_room = Room(["/east", "south"])
+temp_room.description = ["As you are walking, you enter some steampunk area. An industrial fantasy you could say.", "\
+The walls of this room are adorned with copper pipes and gears. The floor looks to be\n\
+made of a dark wood, but it is hard to tell with all of the pipes and gears. There is a\n\
+large clock in the center of the room that ticks away, seemingly powered by steam. There\n\
+are two doors in this room, one to the south and one to the east."]
+temp_room.item_pickups = ["blade",
+						"Upon further inspection, one of the clock hands seems to be made of a very sharp metal.",
+						"You pull this makeshift blade off of the clock, sliding it into your pocket."]
+room_locations[(2, 3)] = temp_room

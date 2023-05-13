@@ -100,6 +100,9 @@ def main():
 		
 		elif choice == "quit":
 			pass
+		
+		else:
+			print("\nInvalid Input\n")
 
 
 if __name__ == "__main__":
