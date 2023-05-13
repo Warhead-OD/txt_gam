@@ -1,14 +1,6 @@
 from Rooms import Room, room_locations, DIRECTIONS
 import pickle
 
-# Formatted as (visited, story progression)
-# Starting Screen,
-#
-# world_location_data = ###
-#
-#
-world_items = []
-
 
 class Player:
 	"""

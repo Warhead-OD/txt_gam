@@ -1,3 +1,4 @@
+from RockPaperScissors import rps
 from numpy import array
 
 INPUT_HELP = {
@@ -30,6 +31,7 @@ class Room:
 		:param allowed_exits: The exits that are allowed for a room. Defaults to no exits.
 		"""
 		self.explored = False
+		self.room_progression = 0  # used to track the progression of the room
 		self.description = ["", ""]  # intro room text, description of this room
 		self.item_pickups = []  # items to pick up, pickup description, description text
 		self.usable_items = {}  # item name, usage text
@@ -80,6 +82,7 @@ class Room:
 					print(self.usable_items[to_use])
 					player.inventory.remove(to_use)
 					del self.usable_items[to_use]
+					self.room_progression += 1
 				else:
 					print("That item cannot be used here.")
 			else:
@@ -165,12 +168,22 @@ def room_code(location):
 	global room_locations
 	if location in room_locations:
 		if location == (2, 2):
-			room_locations[location].description[1] = "You in a grand field that seems to stretch on forever. Towards the ends of the\n\
+			if room_locations[location].room_progression == 1:
+				room_locations[location].description[1] = "You in a grand field that seems to stretch on forever. Towards the ends of the\n\
 world, the ground seems to lilt into the sky. There is a standing table off to one side\n\
 of the field that has one standing table with a microphone on it. There are three buttons\n\
 on the table resembling a different image on each one: rock, paper, and scissors. There\n\
 is a large metalic wall to the south that seems to be blocking your path, however, you seem\n\
 to be able to go in all other directions."
+				if input("\nWould you like to play Rock, Paper, Scissors? (yes/no)\n") == "yes":
+					wins = 0
+					input("\nYou must win 3 times to pass. Press ENTER to begin.\n")
+					while wins < 3:
+						wins += rps()
+						print(f"You have won {wins} times.\n")
+					input("You have won! A key appears on the table.")
+					room_locations[location].item_pickups = ["key", "\nThere is a key on the table.", "You pick up the key."]
+					room_locations[location].room_progression += 1
 	
 	else:
 		print(location)

@@ -95,59 +95,6 @@ Takes the input of the user and then will attempt to let that thing be executed
 	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 
-def rps():
-	"""
-Takes no parameters. Lets the player play one round of Rock Paper Scissors
-against the computer.
-
-	:returns: 1 if player wins, 0 if player loses or ties
-	"""
-	# this determines the computer's choice
-	options = ("Rock", "Paper", "Scissors")
-	options_short = ("R", "P", "S")
-	c_choice_l = options[randint(0, 2)]
-	# this will determine the user's choice
-	u_choice = input("Rock, Paper, or Scissors?\n")
-	
-	# this determines and displays the winner
-	try:
-		c_choice = c_choice_l[0]
-		u_choice = u_choice[0].upper()
-		options_short.index(u_choice)
-		print(f"\nThe computer chose {c_choice_l}!")
-		if u_choice == c_choice:
-			input("It was a tie!")
-		elif u_choice == "R":
-			if c_choice == "S":
-				input("You won!")
-				return 1
-			else:
-				input("You lost!")
-		elif u_choice == "P":
-			if c_choice == "R":
-				input("You won!")
-				return 1
-			else:
-				input("You lost!")
-		elif u_choice == "S":
-			if c_choice == "P":
-				input("You won!")
-				return 1
-			else:
-				input("You lost!")
-		return 0
-	# this will run if the user gives an invalid response
-	except ValueError:
-		print("Invalid choice!")
-		return rps()
-
-
-# This RPS code is something that I have been working on for a while.
-# It **IS** copy and pasted from another one of my repos because I didn't
-# want to have to retype it or deal with the importing.
-# There are some modifications for the purposes of this program
-
-
 def ufmain():
 	print()
 	# This the variable that will be changed to hold the currently
