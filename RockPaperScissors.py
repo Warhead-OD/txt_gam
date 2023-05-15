@@ -44,8 +44,12 @@ def rps():
 		return 0
 	# this will run if the user gives an invalid response
 	except ValueError:
-		print("\nInvalid choice!")
+		print("\nInvalid Choice!")
 		return rps()
+	except IndexError:
+		print("\nInvalid Input!")
+		return rps()
+
 
 # This RPS code is something that I have been working on for a while.
 # It **IS** copy and pasted from another one of my repos because I didn't

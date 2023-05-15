@@ -84,7 +84,7 @@ class Room:
 					del self.usable_items[to_use]
 					if to_use == "blade":
 						input("\nYou have beaten the game! Press enter to quit!")
-						exit("Winner Winner Chicken Dinner!")
+						exit("\n\nWinner Winner Chicken Dinner!\n\n")
 					self.room_progression += 1
 				else:
 					print("That item cannot be used here.")
@@ -283,7 +283,7 @@ invite you to pick it up. There is also a massive crystal chandelier that hangs 
 ceiling, casting rainbows of light across the room. The glowing image of the orb seems to\n\
 pulse and hum, giving you a bad feeling deep in your gut. A feeling of dread sets over you."]
 temp_room.item_pickups = ["orb",
-                          "The orb seems to be pulling you towards it, unrelenting.",
-                          "You pick up the orb and it seems to pulse with energy. You feel a surge of power.\n\
+						"The orb seems to be pulling you towards it, unrelenting.",
+						"You pick up the orb and it seems to pulse with energy. You feel a surge of power.\n\
 You hear a loud, metalic screech, something important you would assume."]
 room_locations[(3, 3)] = temp_room
